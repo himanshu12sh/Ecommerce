@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const ProductCard = ({ data, onDelete }) => {
+const ProductCard = ({ data, onDelete,setIsOpen, setCurrentEditedId ,setData}) => {
 
     const deleteProd = async (id) => {
     try {
@@ -51,7 +51,12 @@ const ProductCard = ({ data, onDelete }) => {
             </div>
             <div className="flex justify-between items-center mt-2">
               <Button
-                onClick={() => handleEdit(item?._id)}
+                onClick={() =>setIsOpen(true)
+                  && setCurrentEditedId(item?._id)
+                  && setData(item?._id)
+                  
+                }
+              
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
               >
                 Edit
