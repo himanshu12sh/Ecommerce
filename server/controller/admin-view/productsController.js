@@ -49,7 +49,6 @@ export const addProduct = async (req, res) => {
       });
     }
 
-    // Create new product
     const newProduct = new Products({
       image: imageUrl,
       title: title.trim(),
@@ -108,7 +107,7 @@ export const editProduct = async(req, res)=>{
     success: false,
     message: "Product not found",
   });
-    }
+    } 
 
     const updatedProd= await Products.findByIdAndUpdate(id, req.body,{
       new:true,
@@ -153,6 +152,42 @@ export const deleteProduct = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Server error while deleting product",
+    });
+  }
+};
+
+
+
+
+export const getDatabyId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Product ID is required",
+      });
+    }
+
+    const product = await Products.findById(id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    console.error("Error getting product by ID:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while getting product by ID",
     });
   }
 };

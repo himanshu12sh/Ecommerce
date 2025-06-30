@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { gsap } from "gsap";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,9 @@ function Products() {
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
+
+
+  
 
   const openSidebar = () => {
     setIsOpen(true);
@@ -51,6 +54,30 @@ function Products() {
   const saleRef = useRef();
   const stockRef = useRef();
 
+
+   const [data, setData] = useState([]);
+  
+    const getData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4001/api/product/getAll"
+        );
+        setData(response?.data?.products);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+
+
+     const handleDelete = (id) => {
+    setData((prev) => prev.filter((item) => item._id !== id));
+  };
+
+
+  
+    useEffect(()=>{
+    getData()
+    },[])
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!imageFile) {
@@ -86,6 +113,7 @@ function Products() {
         setUploadedImageUrl(null);
         toast.success("Product added successfully!");
         closeSidebar();
+        getData()
       } else {
         dispatch(fetchProductsFailure("Failed to add product"));
         toast.error("Failed to add product");
@@ -94,6 +122,25 @@ function Products() {
       console.error("Upload error:", err);
       dispatch(fetchProductsFailure(err.message));
     }
+  };
+
+
+   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+
+   const handleEditClick = async (id) => {
+    const res = await axios.get(`http://localhost:4001/api/product/getDataById/${id}`);
+    setSelectedProduct(res.data.data);
+    setEditModalOpen(true);
+  };
+
+  const handleModalSave = async (updatedProduct) => {
+    await axios.put(`http://localhost:4001/api/product/${updatedProduct._id}`, updatedProduct);
+    setProducts((prev) =>
+      prev.map((prod) => (prod._id === updatedProduct._id ? updatedProduct : prod))
+    );
+    setEditModalOpen(false);
   };
 
   return (
@@ -107,10 +154,10 @@ function Products() {
         </button>
       </div>
       {/* ProductCard component added here */}
-      <div className=" mt-6">
+      <div className="mt-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
 
-        <ProductCard />
+        <ProductCard data={data}  onDelete={handleDelete}/>
       </div>
       </div>
       {isOpen && (
@@ -150,7 +197,7 @@ function Products() {
               />
               {/* Title */}
               <div>
-                <Label htmlFor="title" className="text-sm mb-1 block">
+                <Label htmlFor="title" className="text-sm mb-1 bloc k">
                   Product Title
                 </Label>
                 <Input
@@ -254,7 +301,7 @@ function Products() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+                  className="w-full bg-blue-600 cursor-pointer text-white py-2 rounded-md hover:bg-blue-700"
                 >
                   Save Product
                 </button>
