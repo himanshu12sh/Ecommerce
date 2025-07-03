@@ -25,7 +25,7 @@ function Products() {
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
-
+ 
   
 
   const openSidebar = () => {
@@ -137,7 +137,7 @@ function Products() {
 
   const handleModalSave = async (updatedProduct) => {
     await axios.put(`http://localhost:4001/api/product/${updatedProduct._id}`, updatedProduct);
-    setProducts((prev) =>
+    setData((prev) =>
       prev.map((prod) => (prod._id === updatedProduct._id ? updatedProduct : prod))
     );
     setEditModalOpen(false);
@@ -153,7 +153,6 @@ function Products() {
           Add Product
         </button>
       </div>
-      {/* ProductCard component added here */}
       <div className="mt-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
 
@@ -162,7 +161,6 @@ function Products() {
       </div>
       {isOpen && (
         <>
-          {/* Background overlay */}
           <div
             className="fixed inset-0 bg-black/30 z-40"
             onClick={closeSidebar}

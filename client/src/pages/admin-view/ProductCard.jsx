@@ -9,7 +9,7 @@ const ProductCard = ({ data, onDelete,setIsOpen, setCurrentEditedId ,setData}) =
     const deleteProd = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:4001/api/product/delete/${id}`);
-      onDelete(id); // Notify parent to remove it
+      onDelete(id); 
       toast.success("Prodct Deleted !")
     } catch (error) {
       console.error("Error deleting product", error);
@@ -20,6 +20,7 @@ const ProductCard = ({ data, onDelete,setIsOpen, setCurrentEditedId ,setData}) =
     const response = await axios.get(
       `http://localhost:4001/api/product/getDataById/${id}`
     );
+    
     console.log(response.data.data);
   };
 
@@ -53,8 +54,8 @@ const ProductCard = ({ data, onDelete,setIsOpen, setCurrentEditedId ,setData}) =
               <Button
                 onClick={() =>setIsOpen(true)
                   && setCurrentEditedId(item?._id)
-                  && setData(item?._id)
-                  
+                  && setData(item?._id)&&
+                  handleEdit(item?._id)
                 }
               
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"

@@ -41,7 +41,6 @@ function Sidebar({ open, toggleSidebar }) {
           Admin Panel
         </div>
 
-        {/* Close button on mobile */}
         <button className="sm:hidden" onClick={toggleSidebar}>
           <X className="w-5 h-5" />
         </button>
@@ -54,13 +53,13 @@ function Sidebar({ open, toggleSidebar }) {
             <Link
               key={item.name}
               to={item.path}
-              onClick={() => open && toggleSidebar()} // close on mobile click
+              onClick={() => open && toggleSidebar()} 
               className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100 transition 
               ${isActive ? "bg-gray-100 text-blue-600 font-semibold" : "text-gray-700"}`}
             >
               {item.icon}
               <span className="flex-1">{item.name}</span>
-              {item.badge && (
+              {item.badge && ( 
                 <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full">
                   {item.badge}
                 </span>

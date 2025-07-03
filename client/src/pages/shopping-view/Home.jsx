@@ -2,7 +2,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div>
+    <div className='text-2xl font-bold text-black'> 
       Home
     </div>
   )
