@@ -1,10 +1,13 @@
-import React from 'react'
+
+import React, { Fragment } from 'react'
 
 function Home() {
   return (
-    <div className='text-2xl font-bold text-black'> 
-      Home
-    </div>
+   <>
+   <h1>
+    Home page
+   </h1>
+   </>
   )
 }
 

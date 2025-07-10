@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 // Routes
 import userRouter from "./route/userRouter.js";
 import productRouter from "./route/admin/productRouter.js"
-
+import productFilterRouter from "./route/shop/productFilterRouter.js"
 dotenv.config();
 
 const app = express();
@@ -27,14 +27,14 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json({ limit: "10mb" })); // support larger uploads if needed
+app.use(express.json({ limit: "10mb" })); 
 app.use(cookieParser());
 
 // API routes
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter); // ✅ register new admin/product route
+app.use('/api/shop', productFilterRouter); // ✅ register new admin/product route
 
-// DB connection
 connectDB(DATABASE);
 
 // Server start

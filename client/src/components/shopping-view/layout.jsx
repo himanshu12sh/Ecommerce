@@ -8,7 +8,7 @@ const Shopinglayout = () => {
     
           <div className="flex flex-1 flex-col">
             <ShopHeader />
-            <main className="flex-1 flex bg-muted/40 p-4">
+            <main className="flex-1 flex bg-muted/40 ">
               <Outlet />
             </main>
           </div>

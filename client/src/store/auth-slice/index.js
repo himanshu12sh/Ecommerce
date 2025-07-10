@@ -157,3 +157,31 @@ const authSlice = createSlice({
 
 export const { setUser, logout, setLoading } = authSlice.actions;
 export default authSlice.reducer;
+
+
+export const filterOptions={
+  category:[
+    {id:"men", label:"Men"},
+    {id:"women", label:"Women"},
+    {id:"kids", label:"Kids"},
+    {id:"footwear", label:"Footwear"},
+    {id:"mobile", label:"Mobile"},
+    {id:"electronics", label:"Electronics"},
+  ],
+ brand: [
+    {id:"nike", label:"Nike"},
+    {id:"denim", label:"Denim"},
+    {id:"h&m", label:"H&M"},
+    {id:"puma", label:"Puma"},
+    {id:"levi", label:"Levi"},
+    {id:"zara", label:"Zara"},
+  ]
+}
+
+
+export const sortOptions=[
+{id:"price-lowtohigh" ,label:"Price: Low to High"},
+{id:"price-hightolow" ,label:"Price: High to Low"},
+{id:"title-atoz" ,label:"Price: A to Z"},
+{id:"title-ztoa" ,label:"Price: Z to A"},
+]

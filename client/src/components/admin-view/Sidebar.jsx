@@ -55,7 +55,7 @@ function Sidebar({ open, toggleSidebar }) {
               to={item.path}
               onClick={() => open && toggleSidebar()} 
               className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100 transition 
-              ${isActive ? "bg-gray-100 text-blue-600 font-semibold" : "text-gray-700"}`}
+              ${isActive ? "bg-gray-100 text-red-600 font-semibold" : "text-gray-700"}`}
             >
               {item.icon}
               <span className="flex-1">{item.name}</span>

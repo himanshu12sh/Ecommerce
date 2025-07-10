@@ -81,11 +81,12 @@ function App() {
         {/* ✅ Shop User Protected Routes */}
         <Route
           path="/shoping"
-          element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-              <Shopinglayout />
-            </CheckAuth>
-          }
+          element= {<Shopinglayout />}
+          // element={
+          //   <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+          //     <Shopinglayout />
+          //   </CheckAuth>
+          // }
         >
           <Route path="home" element={<Home />} />
           <Route path="listing" element={<Listing />} />

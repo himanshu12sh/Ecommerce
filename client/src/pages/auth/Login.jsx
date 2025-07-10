@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { loginUser } from "@/store/auth-slice";
+import axios from "axios";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -14,20 +15,36 @@ function Login() {
   });
 
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  // const { isLoading } = useSelector((state) => state.auth);
 
+  const {isLoading,setIsloading} = useState(false)
+const navigate= useNavigate()
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const result = await dispatch(loginUser(formData)).unwrap();
-      toast.success(`Welcome back, ${result.userName}!`);
-    } catch (err) {
-      toast.error(err || "Login failed");
-    }
+   try {
+  const response = await axios.post("http://localhost:4001/api/user/login", formData,{ withCredentials: true });
+
+  const user = response?.data?.user;
+  // const token = response?.data?.token;
+
+  console.log(response.data.user)
+  if (user) {
+    localStorage.setItem("user", JSON.stringify(user));
+    // localStorage.setItem("token", token);
+
+    toast.success(`Welcome back, ${user.userName || "User"}!`);
+    navigate('/shoping/home')
+  } else {
+    toast.error("Invalid response from server");
+  }
+} catch (err) {
+  const message = err?.response?.data?.msg || "Login failed";
+  toast.error(message);
+}
   };
 
   return (
