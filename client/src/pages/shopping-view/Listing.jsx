@@ -9,12 +9,22 @@ function Listing() {
   const [open, setOpen] = useState(false);
   const [product, setProduct] = useState();
 
+  const [filter , setFilter]= useState(null);
+  const [sort , setSort] =useState(null);
+
+  const handleSort=(value)=>{
+  }
+
+  function handleFilter(getSectionId, getCurrentOpt) {
+    console.log(getSectionId, getCurrentOpt);
+  }
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "http://localhost:4001/api/shop/getProductFilter"
       );
       setProduct(response?.data);
+      // console.log("products number---",response?.data)
     } catch (error) {
       console.log("Error in Fetching Data", error);
     }
@@ -25,14 +35,14 @@ function Listing() {
   }, []);
   return (
     <>
-      <Filter />
+      <Filter  filter={filter} handleFilter={handleFilter}/>
       <div className="w-full">
         <div className=" p-4 bg-white shadow border border-b-gray-200  flex items-center justify-between ">
           <h2 className="text-lg font-semibold text-gray-800 ml-4">
             All Products
           </h2>
           <div className="flex items-center gap-2 cursor-pointer">
-            <p className="text-lg text-gray-400">10 Products</p>
+            <p className="text-lg text-gray-400">{product?.products?.length} Products</p>
 
             <div className="relative flex border p-2 mr-10">
               <ArrowUpDown className="w-5 h-5" />
@@ -44,23 +54,31 @@ function Listing() {
                 Sort By
               </button>
             </div>
-            {open && (
-              <div className="absolute top-33 right-14 w-48 bg-white border rounded shadow-lg z-50">
-                <ul>
-                  {sortOptions?.map((sort, index) => (
-                    <li
-                      key={index}
-                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                    >
-                      {sort?.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+           {open && (
+  <div className="absolute top-[33px] right-14 w-48 bg-white border rounded shadow-lg z-50">
+    <ul>
+      {sortOptions?.map((option, index) => (
+        <li
+          key={index}
+          onClick={() => {
+            setSort(option.value);
+            handleSort(option.value);
+            setOpen(false); // close dropdown after selection
+          }}
+          className={`px-4 py-2 cursor-pointer hover:bg-gray-200 ${
+            sort === option.value ? "bg-gray-100 font-semibold" : ""
+          }`}
+        >
+          {option.label}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="">
           <ProductsShop product={product} />
         </div>
       </div>
