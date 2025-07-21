@@ -3,12 +3,11 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const ProductsShop = ({ product }) => {
-  
   return (
     <div className="max-w-6xl grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 mx-auto">
       {product?.products?.map((product) => (
         <Card key={product?._id} className="py-0 mt-10 gap-2">
-          <div className="relative"> 
+          <div className="relative">
             <img
               src={product?.image}
               alt={product?.title}

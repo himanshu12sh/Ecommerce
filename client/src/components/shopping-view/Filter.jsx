@@ -8,31 +8,26 @@ const Filter = ({ filter, handleFilter }) => {
       <h2 className="text-xl font-bold border-b p-4">Filters</h2>
 
       <div className="mt-4">
-        <h3 className="text-md font-bold text-black ml-4">Category</h3>
-        <div className="p-4 space-y-2">
-          {filterOptions?.category.map((keyItem) => (
-            <Label key={keyItem.id} className="flex ml-4 gap-2 items-center">
-              <Checkbox
-                onCheckedChange={() => handleFilter(keyItem, keyItem.id)}
-                className="border border-blue-400"
-              />
-              <span className="text-base text-black">{keyItem.label}</span>
-            </Label>
-          ))}
-        </div>
-
-        <h3 className="text-md font-bold text-black ml-4 mt-2">Brand</h3>
-        <div className="p-4 space-y-2">
-          {filterOptions?.brand?.map((item) => (
-            <Label key={item.id} className="flex ml-4 gap-2">
-              <Checkbox
-                className="border border-blue-400"
-                onCheckedChange={() => handleFilter(item, item.id)}
-              />
-              <span className="text-base text-black">{item.label}</span>
-            </Label>
-          ))}
-        </div>
+        {Object.keys(filterOptions).map((sectionKey) => (
+          <div key={sectionKey}>
+            <h3 className="text-md font-bold text-black ml-4 capitalize">
+              {sectionKey}
+            </h3>
+            <div className="p-4 space-y-2">
+              {filterOptions[sectionKey].map((item) => (
+                <Label key={item.id} className="flex ml-4 gap-2 items-center">
+                  <Checkbox
+                    onCheckedChange={(checked) =>
+                      handleFilter(sectionKey, item.id)
+                    }
+                    className="border border-blue-400"
+                  />
+                  <span className="text-base text-black">{item.label}</span>
+                </Label>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
